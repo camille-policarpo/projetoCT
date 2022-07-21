@@ -1,9 +1,6 @@
 import axios from "axios";
 
-export const climateRainAPI = axios.create ({
-    baseURL: "/api/v1/anl/synoptic/locale/:country?token=your-app-token"
+export const Openmeteo = axios.create ({
+    baseURL: "https://api.open-meteo.com/v1/forecast?latitude=-20.26&longitude=-40.28&hourly=temperature_2m"
 })
 
-export const climateTemperatureAPI = axios.create ({
-    baseURL: "/api/v1/climate/temperature/locale/:id?token=your-app-token"
-})
