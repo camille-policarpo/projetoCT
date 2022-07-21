@@ -19,17 +19,14 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <Flex as={"form"} h={"100vh"} justifyContent="center" alignItems={"center"} onSubmit= {(event) => onSubmit(event)}>
-          <Box boxSize='sm' >
-            <Image src='https://www.istockphoto.com/br/vetor/fundo-do-jogo-da-arte-do-pixel-com-c%C3%A9u-azul-e-nuvens-gm1186138729-334553922' alt='Dan Abramov' />
-              <Box borderRadius="xl" bg="whiteAlpha.400" padding="10">
-                <Text>{texto}</Text>
-                <Input onChange= {(event) => setTexto(event.target.value)}/>
-                <Button type="submit">ENVIAR</Button>
+        <Flex as={"form"} h={"100vh"} justifyContent="center" alignItems={"center"} bgImage="ceu.gif" onSubmit= {(event) => onSubmit(event)}>
+          <Box borderRadius="xl" bg="whiteAlpha.400" padding="10">
+            <Text>{texto}</Text>
+            <Input onChange= {(event) => setTexto(event.target.value)}/>
+            <Button type="submit">ENVIAR</Button>
 
-                
+            
 
-              </Box>
           </Box>
         </Flex>
       </main>
