@@ -19,7 +19,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <Flex as={"form"} h={"100vh"} justifyContent="center" alignItems={"center"} bg="orange.400" onSubmit= {(event) => onSubmit(event)}>
+        <Flex as={"form"} h={"100vh"} justifyContent="center" alignItems={"center"} bg="pink.400" onSubmit= {(event) => onSubmit(event)}>
           <Box borderRadius="xl" bg="whiteAlpha.400" padding="10">
             <Text>{texto}</Text>
             <Input onChange= {(event) => setTexto(event.target.value)}/>
