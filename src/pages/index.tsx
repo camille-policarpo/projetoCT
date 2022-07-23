@@ -21,21 +21,39 @@ const Home: NextPage = () => {
 
       <main>
         <Flex align='center' justify-content= 'center'>
-          <Box  w='1000vh' h='1000vh' justify-content= 'center' bgImage="ceu.jpg" bgRepeat="no-repeat"> 
+          <Box  w='100vw' h='1000vh' justify-content= 'center' bgImage="ceu.jpg" bgRepeat="no-repeat"> 
                 <Tabs  align='center' variant='soft-rounded' colorScheme='green' >
                   <TabList>
                   <Tab>Londres</Tab>
-                  <Tab>Cairo</Tab>
+                  <Tab>New York</Tab>
                   <Tab>Brasilia</Tab>
+                  <Tab>Tokyo</Tab>
+                  <Tab>Cairo</Tab>
+                  <Tab>Camberra</Tab>
                 </TabList>
                 <TabPanels>
-                <TabPanel>
+                {/* Londres */}
+                <TabPanel> 
                   <p>TEMPERATURA E n sei!</p>
                 </TabPanel>
-                <TabPanel>
+                {/* New York */}
+                <TabPanel> 
                   <p>two!</p>
                 </TabPanel>
-                <TabPanel>
+                {/* Brasilia */}
+                <TabPanel> 
+                  <p>three!</p>
+                </TabPanel>
+                {/* Tokyo */}
+                <TabPanel> 
+                  <p>three!</p>
+                </TabPanel>
+                {/* Cairo */}
+                <TabPanel> 
+                  <p>three!</p>
+                </TabPanel>
+                {/* Camberra */}
+                <TabPanel> 
                   <p>three!</p>
                 </TabPanel>
               </TabPanels>
