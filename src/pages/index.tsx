@@ -20,18 +20,29 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <Flex as={"form"} h={"100vh"} justifyContent="center" alignItems={"center"} bgImage="ceu.jpg" onSubmit= {(event) => onSubmit(event)}>
-          <Box borderRadius="xl" bg="whiteAlpha.400" padding="10">
-            <Text>{texto}</Text>
-            <Input onChange= {(event) => setTexto(event.target.value)}/>
-            <Button type="submit">ENVIAR</Button>
-            
-            
-
-            
-
-          </Box>
+        <Flex align='center' justify-content= 'center'>
+          <Box  w='1000vh' h='1000vh' justify-content= 'center' bgImage="ceu.jpg" bgRepeat="no-repeat"> 
+                <Tabs  align='center' variant='soft-rounded' colorScheme='green' >
+                  <TabList>
+                  <Tab>Londres</Tab>
+                  <Tab>Cairo</Tab>
+                  <Tab>Brasilia</Tab>
+                </TabList>
+                <TabPanels>
+                <TabPanel>
+                  <p>TEMPERATURA E n sei!</p>
+                </TabPanel>
+                <TabPanel>
+                  <p>two!</p>
+                </TabPanel>
+                <TabPanel>
+                  <p>three!</p>
+                </TabPanel>
+              </TabPanels>
+            </Tabs>
+          </Box>  
         </Flex>
+
       </main>
     </div>
   )
