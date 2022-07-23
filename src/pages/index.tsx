@@ -1,7 +1,8 @@
 import { FormEvent, useState } from 'react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { Flex, Box, Text, Input, Button, Image } from '@chakra-ui/react';
+import { Flex, Box, Text, Input, Button, Image, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
+
 
 
 const Home: NextPage = () => {
@@ -19,11 +20,13 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <Flex as={"form"} h={"100vh"} justifyContent="center" alignItems={"center"} bgImage="ceu.gif" onSubmit= {(event) => onSubmit(event)}>
+        <Flex as={"form"} h={"100vh"} justifyContent="center" alignItems={"center"} bgImage="ceu.jpg" onSubmit= {(event) => onSubmit(event)}>
           <Box borderRadius="xl" bg="whiteAlpha.400" padding="10">
             <Text>{texto}</Text>
             <Input onChange= {(event) => setTexto(event.target.value)}/>
             <Button type="submit">ENVIAR</Button>
+            
+            
 
             
 
