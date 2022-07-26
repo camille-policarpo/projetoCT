@@ -21,22 +21,27 @@ const Home: NextPage = () => {
   const [tMax, setTMax] = useState('');
   const [umi, setUmi] = useState('');
 
+  const [name, setName] = useState('');
+
   async function onSubmit(event: FormEvent){
     event.preventDefault();
     const res = await Coordenadas.get(`search?name=${texto}&count=1`)
-    const {latitude,longitude,timezone} = res.data.results[0]
-    let newTimezone = timezone.replace ('/', '%2F');
 
+    const {latitude,longitude,timezone,name} = res.data.results[0]
+    
+    setName(res.data.results[0].name)
+
+    let newTimezone = timezone.replace ('/', '%2F');
+    console.log(name)
 
     const api = await Openmeteo.get(`forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,relativehumidity_2m&daily=temperature_2m_max,temperature_2m_min&timezone=${newTimezone}`) .then((data) => {
-      console.log(data.data) 
+         
       setTMax(data.data.daily.temperature_2m_max[0])
        setTMin (data.data.daily.temperature_2m_min[0])
        setUmi (data.data.hourly.relativehumidity_2m[0])
        setTemp (data.data.hourly.temperature_2m[0])
    }
   )
-
   }
 
   return (
@@ -55,6 +60,8 @@ const Home: NextPage = () => {
             <Button bgColor={'white.400'} type="submit" size={'sm'} width='70px' alignSelf={'center'}>ENVIAR</Button>
 
             <Flex alignItems='start' direction={'column'}>
+              <Text fontSize={'xl'} noOfLines={1}> Cidade encontrada: {name}</Text>
+
               <FaTemperatureHigh />   <Text fontSize={'xl'} noOfLines={1} color={''}> Temperatura: {temp} (°C)</Text>
               <MdOutlineWaterDrop />  <Text  fontSize={'xl'} noOfLines={1} color={''}> Umidade: {umi} (%)</Text>
               <TbTemperaturePlus />   <Text fontSize={'xl'} color={''}> Temp máxima do dia: {tMax} (°C)</Text>
