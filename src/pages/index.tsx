@@ -10,47 +10,34 @@ import { MdOutlineWaterDrop } from 'react-icons/md'
 interface Coordenada {
   latitude: number;
   longitude: number;
-
-}
-
-interface Tempo {
-  temperature_2m: number;
-
 }
 
 const Home: NextPage = () => {
 
   const [coordenadas, setCoordenada] = useState<Coordenada | null>();
   const [texto, setTexto] = useState('');
- 
-  let  temp, umi, tMin, tMax
+  const [temp, setTemp] = useState('');
+  const [tMin, setTMin] = useState('');
+  const [tMax, setTMax] = useState('');
+  const [umi, setUmi] = useState('');
 
   async function onSubmit(event: FormEvent){
     event.preventDefault();
     const res = await Coordenadas.get(`search?name=${texto}&count=1`)
-    //await Coordenadas.get(`search?name=${texto}&count=1`).then((data) => {
-    //setCoordenada(data.data)
-    //}
-    //)
-  
     const {latitude,longitude,timezone} = res.data.results[0]
-
-
     let newTimezone = timezone.replace ('/', '%2F');
 
-  
-    const api = await Openmeteo.get(`forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,relativehumidity_2m&daily=temperature_2m_max,temperature_2m_min&timezone=${newTimezone}`)
-
-     console.log(api.data)
-
-
-
-      tMax = api.data.daily.temperature_2m_max[0]
-
-      return (
-        tMax
-      )
     
+
+  
+    const api = await Openmeteo.get(`forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,relativehumidity_2m&daily=temperature_2m_max,temperature_2m_min&timezone=${newTimezone}`) .then((data) => {
+       setTMax(data.data.daily.temperature_2m_max[0])
+       setTMin (data.data.daily.temperature_2m_min[0])
+       setUmi (data.data.hourly.relativehumidity_2m[0])
+       setTemp (data.data.hourly.temperature_2m[0])
+   }
+  )
+
   }
 
   
@@ -66,20 +53,20 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <Flex as="form" alignItems={"center"} h='100vh' justifyContent='center' bg='blue.200' onSubmit={(event) => onSubmit(event)}>
-          <Flex borderRadius="xl" bg='whiteAlpha.400' padding={"10"} direction={'column'}> 
-          <Input onChange={(event) => setTexto(event.target.value)}/>
-          <Button type="submit">ENVIAR</Button>
+          <Flex as="form" alignItems={"center"} h='100vh' justifyContent='center' bg='blue.200' onSubmit={(event) => onSubmit(event)}>
+            <Flex borderRadius="xl" bg='whiteAlpha.400' padding={"10"} direction={'column'}> 
+            <Input onChange={(event) => setTexto(event.target.value)}/>
+            <Button type="submit">ENVIAR</Button>
 
-          <Flex alignItems='start' direction={'column'}>
-            <FaTemperatureHigh />   <Text> Temperatura em celsius: {temp}</Text>
-            <MdOutlineWaterDrop />  <Text> Umidade: {umi}</Text>
-            <TbTemperaturePlus />   <Text> Temp máxima do dia: {tMax}</Text>
-            <TbTemperatureMinus />  <Text> Temp mínima do dia: {tMin}</Text>
-          </Flex>
+            <Flex alignItems='start' direction={'column'}>
+              <FaTemperatureHigh />   <Text> Temperatura em celsius: {temp}</Text>
+              <MdOutlineWaterDrop />  <Text> Umidade: {umi} </Text>
+              <TbTemperaturePlus />   <Text> Temp máxima do dia: {tMax}</Text>
+              <TbTemperatureMinus />  <Text> Temp mínima do dia: {tMin}</Text>
+            </Flex>
 
+            </Flex>
           </Flex>
-        </Flex>
 
       </main>
     </div>
