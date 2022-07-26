@@ -29,7 +29,7 @@ const Home: NextPage = () => {
   async function onSubmit(event: FormEvent){
     event.preventDefault();
       try {
-        const res = await Coordenadas.get(`search?name=${texto}&count=1`).then((data) => {
+        const res = await Coordenadas.get(`search?name=${texto}&language=pt&count=1`).then((data) => {
           const {latitude,longitude,timezone} = data.data.results[0]
           const name = data.data.results[0].name
           	
