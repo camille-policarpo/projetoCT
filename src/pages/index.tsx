@@ -53,16 +53,16 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-          <Flex as="form" alignItems={"center"} h='100vh' justifyContent='center' bg='blue.200' onSubmit={(event) => onSubmit(event)}>
-            <Flex borderRadius="xl" bg='whiteAlpha.400' padding={"10"} direction={'column'}> 
+          <Flex as="form" alignItems={"center"} h='100vh' justifyContent='center' bg='blue.100' onSubmit={(event) => onSubmit(event)}>
+            <Flex borderRadius="xl" bgImage={'ceu.jpg'} padding={"10"} direction={'column'}> 
             <Input onChange={(event) => setTexto(event.target.value)}/>
-            <Button type="submit">ENVIAR</Button>
+            <Button bgColor={'white.400'} type="submit">ENVIAR</Button>
 
             <Flex alignItems='start' direction={'column'}>
-              <FaTemperatureHigh />   <Text> Temperatura em celsius: {temp}</Text>
-              <MdOutlineWaterDrop />  <Text> Umidade: {umi} </Text>
-              <TbTemperaturePlus />   <Text> Temp máxima do dia: {tMax}</Text>
-              <TbTemperatureMinus />  <Text> Temp mínima do dia: {tMin}</Text>
+              <FaTemperatureHigh />   <Text noOfLines={1} color={''}> Temperatura °C: {temp}</Text>
+              <MdOutlineWaterDrop />  <Text  noOfLines={1} color={''}> Umidade: {umi} </Text>
+              <TbTemperaturePlus />   <Text color={''}> Temp máxima do dia: {tMax}</Text>
+              <TbTemperatureMinus />  <Text color={''}> Temp mínima do dia: {tMin}</Text>
             </Flex>
 
             </Flex>
