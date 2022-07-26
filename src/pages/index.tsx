@@ -58,7 +58,7 @@ const Home: NextPage = () => {
       } catch (error) {
         toast({
           title: 'Cidade NÃO encontrada.',
-          description: "Tente novamente (cidades iniciam com maiúscula).",
+          description: "Tente novamente.",
           status: 'error',
           duration: 9000,
           isClosable: true,
