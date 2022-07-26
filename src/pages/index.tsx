@@ -1,11 +1,12 @@
 import { FormEvent, useState } from 'react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { Flex, Box, Text, Input, Button, Image } from '@chakra-ui/react';
+import { Flex, Box, Text, Input, Button, Image, Toast, useToast} from '@chakra-ui/react';
 import { Coordenadas, Openmeteo } from '../services/axios';
 import { FaTemperatureHigh } from 'react-icons/fa'
 import { TbTemperatureMinus , TbTemperaturePlus } from 'react-icons/tb'
 import { MdOutlineWaterDrop } from 'react-icons/md'
+import { stringify } from 'querystring';
 
 interface Coordenada {
   latitude: number;
@@ -23,27 +24,49 @@ const Home: NextPage = () => {
 
   const [name, setName] = useState('');
 
+  const toast = useToast();
+
   async function onSubmit(event: FormEvent){
     event.preventDefault();
-    const res = await Coordenadas.get(`search?name=${texto}&count=1`)
-
-    const {latitude,longitude,timezone,name} = res.data.results[0]
+      try {
+        const res = await Coordenadas.get(`search?name=${texto}&count=1`).then((data) => {
+          const {latitude,longitude,timezone} = data.data.results[0]
+          const name = data.data.results[0].name
+          	
+          toast({
+            title: `Cidade encontrada: ${name}`,
+            status: 'success',
+            duration: 9000,
+            isClosable: true,
+          })
+          
+      
+          let newTimezone = timezone.replace ('/', '%2F');
+          console.log(name)
     
-    setName(res.data.results[0].name)
+        
+    
+          const api = Openmeteo.get(`forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,relativehumidity_2m&daily=temperature_2m_max,temperature_2m_min&timezone=${newTimezone}`) .then((data) => {
+             
+            setTMax(data.data.daily.temperature_2m_max[0])
+             setTMin (data.data.daily.temperature_2m_min[0])
+             setUmi (data.data.hourly.relativehumidity_2m[0])
+             setTemp (data.data.hourly.temperature_2m[0])
+         }
+        )
+      })
+      } catch (error) {
+        toast({
+          title: 'Cidade NÃO encontrada.',
+          description: "Tente novamente (cidades iniciam com maiúscula).",
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        })
+      }
 
-    let newTimezone = timezone.replace ('/', '%2F');
-    console.log(name)
-
-    const api = await Openmeteo.get(`forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,relativehumidity_2m&daily=temperature_2m_max,temperature_2m_min&timezone=${newTimezone}`) .then((data) => {
-         
-      setTMax(data.data.daily.temperature_2m_max[0])
-       setTMin (data.data.daily.temperature_2m_min[0])
-       setUmi (data.data.hourly.relativehumidity_2m[0])
-       setTemp (data.data.hourly.temperature_2m[0])
-   }
-  )
-  }
-
+}
+  
   return (
     <div>
       <Head>
@@ -60,8 +83,6 @@ const Home: NextPage = () => {
             <Button bgColor={'white.400'} type="submit" size={'sm'} width='70px' alignSelf={'center'}>ENVIAR</Button>
 
             <Flex alignItems='start' direction={'column'}>
-              <Text fontSize={'xl'} noOfLines={1}> Cidade encontrada: {name}</Text>
-
               <FaTemperatureHigh />   <Text fontSize={'xl'} noOfLines={1} color={''}> Temperatura: {temp} (°C)</Text>
               <MdOutlineWaterDrop />  <Text  fontSize={'xl'} noOfLines={1} color={''}> Umidade: {umi} (%)</Text>
               <TbTemperaturePlus />   <Text fontSize={'xl'} color={''}> Temp máxima do dia: {tMax} (°C)</Text>
