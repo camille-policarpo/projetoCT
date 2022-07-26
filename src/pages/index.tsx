@@ -33,11 +33,15 @@ const Home: NextPage = () => {
   
     const {latitude,longitude,timezone} = res.data.results[0]
 
-    
 
-    const api = await Openmeteo.get(`forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,relativehumidity_2m&daily=temperature_2m_max,temperature_2m_min&timezone=Europe%2FLondon`)
+    let newTimezone = timezone.replace ('/', '%2F');
+
+  
+    const api = await Openmeteo.get(`forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,relativehumidity_2m&daily=temperature_2m_max,temperature_2m_min&timezone=${newTimezone}`)
 
     teste = api.data.elevation
+
+    console.log(newTimezone)
 
     console.log(teste)
     
