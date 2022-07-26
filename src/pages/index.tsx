@@ -57,7 +57,7 @@ const Home: NextPage = () => {
             <Flex borderRadius="xl" bg='whiteAlpha.400' padding={"10"} direction={'column'}> 
             <Input onChange={(event) => setTexto(event.target.value)}/>
             <Button type="submit">ENVIAR</Button>
-
+            <Text noOfLines={[1]}></Text>
             <Flex alignItems='start' direction={'column'}>
               <FaTemperatureHigh />   <Text> Temperatura em celsius: {temp}</Text>
               <MdOutlineWaterDrop />  <Text> Umidade: {umi} </Text>
