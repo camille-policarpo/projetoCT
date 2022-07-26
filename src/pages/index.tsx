@@ -3,6 +3,9 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { Flex, Box, Text, Input, Button, Image } from '@chakra-ui/react';
 import { Coordenadas, Openmeteo } from '../services/axios';
+import { FaTemperatureHigh } from 'react-icons/fa'
+import { TbTemperatureMinus , TbTemperaturePlus } from 'react-icons/tb'
+import { MdOutlineWaterDrop } from 'react-icons/md'
 
 interface Coordenada {
   latitude: number;
@@ -18,10 +21,9 @@ interface Tempo {
 const Home: NextPage = () => {
 
   const [coordenadas, setCoordenada] = useState<Coordenada | null>();
-
   const [texto, setTexto] = useState('');
  
-  let teste
+  let  temp, umi, tMin, tMax
 
   async function onSubmit(event: FormEvent){
     event.preventDefault();
@@ -39,14 +41,20 @@ const Home: NextPage = () => {
   
     const api = await Openmeteo.get(`forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,relativehumidity_2m&daily=temperature_2m_max,temperature_2m_min&timezone=${newTimezone}`)
 
-    teste = api.data.elevation
+     console.log(api.data)
 
-    console.log(newTimezone)
 
-    console.log(teste)
+
+      tMax = api.data.daily.temperature_2m_max[0]
+
+      return (
+        tMax
+      )
     
   }
 
+  
+  
 
 
   return (
@@ -64,10 +72,10 @@ const Home: NextPage = () => {
           <Button type="submit">ENVIAR</Button>
 
           <Flex alignItems='start' direction={'column'}>
-            <Text>Temperatura em celsius: {teste}</Text>
-            <Text>Umidade:</Text>
-            <Text>Temp máxima do dia:</Text>
-            <Text>Temp mínima do dia:</Text>
+            <FaTemperatureHigh />   <Text> Temperatura em celsius: {temp}</Text>
+            <MdOutlineWaterDrop />  <Text> Umidade: {umi}</Text>
+            <TbTemperaturePlus />   <Text> Temp máxima do dia: {tMax}</Text>
+            <TbTemperatureMinus />  <Text> Temp mínima do dia: {tMin}</Text>
           </Flex>
 
           </Flex>
