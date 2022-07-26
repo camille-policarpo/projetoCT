@@ -31,7 +31,8 @@ const Home: NextPage = () => {
 
   
     const api = await Openmeteo.get(`forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,relativehumidity_2m&daily=temperature_2m_max,temperature_2m_min&timezone=${newTimezone}`) .then((data) => {
-       setTMax(data.data.daily.temperature_2m_max[0])
+      console.log(data.data) 
+      setTMax(data.data.daily.temperature_2m_max[0])
        setTMin (data.data.daily.temperature_2m_min[0])
        setUmi (data.data.hourly.relativehumidity_2m[0])
        setTemp (data.data.hourly.temperature_2m[0])
@@ -53,16 +54,17 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-          <Flex as="form" alignItems={"center"} h='100vh' justifyContent='center' bg='blue.200' onSubmit={(event) => onSubmit(event)}>
-            <Flex borderRadius="xl" bg='whiteAlpha.400' padding={"10"} direction={'column'}> 
-            <Input onChange={(event) => setTexto(event.target.value)}/>
-            <Button type="submit">ENVIAR</Button>
-            <Text noOfLines={[1]}></Text>
+          <Flex as="form" alignItems={"center"} h='100vh' justifyContent='center' bg='gray.300' onSubmit={(event) => onSubmit(event)}>
+            <Flex borderRadius="xl" boxShadow={'2xl'} bgImage={'ceu.jpg'} padding={"10"} direction={'column'} width='380px'> 
+            <Text fontSize={'2xl'} >Digite a cidade:</Text>
+            <Box bgColor={'whiteAlpha.400'} borderRadius="xl" border='0px' ><Input  onChange={(event) => setTexto(event.target.value)}/></Box>
+            <Button bgColor={'white.400'} type="submit" size={'sm'} width='70px' alignSelf={'center'}>ENVIAR</Button>
+
             <Flex alignItems='start' direction={'column'}>
-              <FaTemperatureHigh />   <Text> Temperatura em celsius: {temp}</Text>
-              <MdOutlineWaterDrop />  <Text> Umidade: {umi} </Text>
-              <TbTemperaturePlus />   <Text> Temp máxima do dia: {tMax}</Text>
-              <TbTemperatureMinus />  <Text> Temp mínima do dia: {tMin}</Text>
+              <FaTemperatureHigh />   <Text fontSize={'xl'} noOfLines={1} color={''}> Temperatura: {temp} (°C)</Text>
+              <MdOutlineWaterDrop />  <Text  fontSize={'xl'} noOfLines={1} color={''}> Umidade: {umi} (%)</Text>
+              <TbTemperaturePlus />   <Text fontSize={'xl'} color={''}> Temp máxima do dia: {tMax} (°C)</Text>
+              <TbTemperatureMinus />  <Text fontSize={'xl'} color={''}> Temp mínima do dia: {tMin} (°C)</Text>
             </Flex>
 
             </Flex>
